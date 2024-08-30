@@ -4,7 +4,7 @@
 
 	"站名":"555影视",
 
-	"主页url":"https://1moviemax.com/",
+	"主页url":"https://media555portal.com/",
 
 	"简介":"<p&&</p>",
 
@@ -36,7 +36,7 @@
 
 	"播放列表":"<a&&</a>",
 
-	"分类url":"https://1moviemax.com/vodshow/{cateId}-{area}-{by}-{class}-{lang}----{catePg}---{year}.html;;ak",
+	"分类url":"https://media555portal.com/vodshow/{cateId}-{area}-{by}-{class}-{lang}----{catePg}---{year}.html;;ak",
 
 	"分类":"电影$1#电视剧$2#综艺纪录$3#动漫$4",
 
