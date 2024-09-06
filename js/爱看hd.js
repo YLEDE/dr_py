@@ -2,7 +2,7 @@ var rule={
     title:'爱看',
     模板:'mxpro',
     // host:'https://akanhd.com',
-    host:'https://aikanhd.vip',
+    host:'https://www.aikanhd.vip',
     hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
     // url:'/vodshow/fyclass--------fypage---/',
     url:'/vodshow/fyfilter/',
