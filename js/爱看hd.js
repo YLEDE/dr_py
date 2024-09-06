@@ -2,7 +2,7 @@ muban.短视2.二级.img = '.detail-pic&&img&&data-original';
 var rule = {
     title: '爱看',
     模板:'短视2',
-    host:'https://aikanys.vip',
+    host:'https://akys.info',
     hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
     homeUrl:'/map/',
 	// url: '/index.php/api/vod#type=fyclass&page=fypage',
