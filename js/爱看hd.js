@@ -1,6 +1,6 @@
 var rule = {
   title: '',
-  host: 'https://www.akys.info/',
+  host: 'https://www.aikanys.vip/',
   hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});HOST = jsp.pdfh(html,".links li:eq(1) a&&href");log(HOST);',
   url: '/vodshow/fyclass--------fypage---/',
   searchUrl: '/rss/sm.index.xml?wd=**',
