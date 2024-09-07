@@ -1,6 +1,3 @@
-// 地址发布页 https://aikanys.vip
-// 搜索 数字验证
-
 var rule = {
     title: '爱看',
     host:'https://www.aikanys.pro',
