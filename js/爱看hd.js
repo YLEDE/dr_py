@@ -1,10 +1,13 @@
-var rule = {
-    title: '爱看hd',
-    host: 'https://www.aikanhd.vip',
-    url: '/vodshow/fyfilter/',
-    searchUrl: '/rss.xml?wd=**',
-    searchable: 2,
-    quickSearch: 0,
+muban.mxpro.二级.desc = '.module-info-item:eq(4)&&Text;;;.module-info-item-content:eq(1)&&Text;.module-info-item-content:eq(0)&&Text';
+muban.mxpro.二级.tabs = '#y-playList&&.tab-item';
+muban.mxpro.二级.tab_text = 'body--small&&Text'
+var rule={
+    title:'爱看',
+    模板:'mxpro',
+    // host:'https://akanhd.com',
+    host:'https://aikanys.vip',
+    hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
+    // url:'/vodshow/fyclass--------fypage---/',
     url:'/vodshow/fyfilter/',
     filterable:1,//是否启用分类筛选,
     filter_url:'{{fl.cateId}}-{{fl.area}}-{{fl.by or "time"}}-{{fl.class}}-{{fl.lang}}-{{fl.letter}}---fypage---{{fl.year}}',
@@ -28,41 +31,24 @@ var rule = {
         14:{cateId:'14'},
         20:{cateId:'20'}
     },
-            headers: {
-'User-Agent': 'Mozilla/5.0 (Windo9ws NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-            },
-            timeout: 5000,
-            class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
-            cate_exclude: '爱看动漫公告|伦理剧',
-            play_parse: true,
-            lazy: `js:input = {parse: 1, url: input, js: ''}`,
-            double: true,
-            推荐: '*',
-            一级: 'body&&.video-content-item;.text-overflow&&Text;.lazyload&&data-original;.video-title&&Text;a&&href;.text-muted&&Text',
-            二级: {
-                title: 'h1&&Text;.ewave-collapse-item&&li&&Text',
-                img: '.lazyload&&data-original',
-                desc: '.ewave-collapse-item&&li:eq(1)&&Text;.row:eq(2)&&li:eq(1)&&Text;.row:eq(2)&&li&&Text;.detail-info-text&&p&&Text;.ewave-collapse-item&&p&&Text',
-                content: '.mb-0:eq(-1)&&Text',
-                tabs: '.ewave-playlist-tab a',
-                lists: '.ewave-playlist-content:eq(#id)&&li',
-            },
-              搜索: $js.toString(() => {
-        let html = request(input);
-        let items = pdfa(html, 'rss&&item');
-        // log(items);
-        let d = [];
-        items.forEach(it => {
-            it = it.replace(/title|link|author|pubdate|description/g, 'p');
-            let url = pdfh(it, 'p:eq(1)&&Text');
-            d.push({
-                title: pdfh(it, 'p&&Text'),
-                url: url,
-                desc: pdfh(it, 'p:eq(3)&&Text'),
-                content: pdfh(it, 'p:eq(2)&&Text'),
-                pic_url: "",
-            });
-        });
-        setResult(d);
-    }),
+    searchUrl: '/vodsearch/**----------fypage---/',
+    class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
+    lazy:`js:
+        var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
+        var url = html.url;
+        if (html.encrypt == '1') {
+            url = unescape(url)
+        } else if (html.encrypt == '2') {
+            url = unescape(base64Decode(url))
         }
+        if (/\\.m3u8|\\.mp4/.test(url)) {
+            input = {
+                jx: 0,
+                url: url,
+                parse: 0
+            }
+        } else {
+            input
+        }
+    `,
+}
