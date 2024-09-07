@@ -1,6 +1,6 @@
 var rule = {
     title: '爱看',
-    host:'https://www.aikanys.pro',
+    host:'https://aikanys.vip',
     hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
     homeUrl:'/map/',
 	// url: '/index.php/api/vod#type=fyclass&page=fypage',
@@ -80,5 +80,23 @@ var rule = {
             it.vod_pic = it.vod_pic.replace(/mac/, "https");
             return it
         });
-    `, 
+    `,
+    搜索: $js.toString(() => {
+        let html = request(input);
+        let items = pdfa(html, 'rss&&item');
+        // log(items);
+        let d = [];
+        items.forEach(it => {
+            it = it.replace(/title|link|author|pubdate|description/g, 'p');
+            let url = pdfh(it, 'p:eq(1)&&Text');
+            d.push({
+                title: pdfh(it, 'p&&Text'),
+                url: url,
+                desc: pdfh(it, 'p:eq(3)&&Text'),
+                content: pdfh(it, 'p:eq(2)&&Text'),
+                pic_url: "",
+            });
+        });
+        setResult(d);
+    }), 
 }
