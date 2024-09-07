@@ -1,5 +1,9 @@
+muban.mxpro.二级.desc = '.module-info-item:eq(4)&&Text;;;.module-info-item-content:eq(1)&&Text;.module-info-item-content:eq(0)&&Text';
+muban.mxpro.二级.tabs = '#y-playList&&.tab-item';
+muban.mxpro.二级.tab_text = 'body--small&&Text'
 var rule = {
     title: '爱看hd',
+	模板:'mxpro',
     host: 'https://www.aikanhd.vip',
     url: '/vodshow/fyfilter/',
     searchUrl: '/rss.xml?wd=**',
