@@ -35,16 +35,10 @@ var rule={
 	lazy:`js:
         var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
         var url = html.url;
-        var from = html.from;
-        var next = html.link_next;
         if (html.encrypt == '1') {
             url = unescape(url)
         } else if (html.encrypt == '2') {
             url = unescape(base64Decode(url))
-        } else if (html.encrypt == '3') {
-            url = url.substring(8, url.length);
-            url = base64Decode(url);
-            url = url.substring(8, (url.length) - 8)
         }
         if (/\\.m3u8|\\.mp4/.test(url)) {
             input = {
@@ -53,33 +47,26 @@ var rule={
                 parse: 0
             }
         } else {
-            var paurl = request(HOST + '/static/player/' + from + '.js').match(/ src="(.*?)'/)[1];
-            if (/https/.test(paurl)) {
-                var purl = paurl + url + '&next=' + next + '&title=';
-                input = {
-                    jx: 0,
-                    url: purl,
-                    parse: 1
-                }
-            }
+            input
         }
     `,
-	搜索: $js.toString(() => {
-        let html = request(input);
-        let items = pdfa(html, 'rss&&item');
-        // log(items);
-        let d = [];
-        items.forEach(it => {
-            it = it.replace(/title|link|author|pubdate|description/g, 'p');
-            let url = pdfh(it, 'p:eq(1)&&Text');
-            d.push({
-                title: pdfh(it, 'p&&Text'),
-                url: url,
-                desc: pdfh(it, 'p:eq(3)&&Text'),
-                content: pdfh(it, 'p:eq(2)&&Text'),
-                pic_url: "",
-            });
-        });
-        setResult(d);
-    }),
+    搜索:`js:
+		pdfh = jsp.pdfh, pdfa = jsp.pdfa, pd = jsp.pd;
+		let d = [];
+		var html = request(input);
+		let list = pdfa(html, "rss&&item");
+		for (var i = 0; i < list.length; i++) {
+			var title = list[i].match(/\\<title\\>(.*?)\\<\\/title\\>/)[1];
+			var desc = pdfh(list[i], 'description&&Text');
+			var cont = pdfh(list[i], 'pubdate&&Text');
+			var url = list[i].match(/\\<link\\>(.*?)\\n/)[1];
+			d.push({
+				title: title,
+				desc: desc,
+				content: cont,
+				url: url
+			})
+		}
+		setResult(d)
+	`,
 }
