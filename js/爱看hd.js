@@ -5,7 +5,7 @@ var rule={
     title:'爱看',
     模板:'mxpro',
     // host:'https://akanhd.com',
-    host:'https://aikanys.vip',
+    host:'https://www.aikanys.pro',
     hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
     url:'/vodshow/fyfilter/',
     searchUrl: '/rss.xml?wd=**',
