@@ -50,23 +50,4 @@ var rule={
             input
         }
     `,
-    搜索:`js:
-		pdfh = jsp.pdfh, pdfa = jsp.pdfa, pd = jsp.pd;
-		let d = [];
-		var html = request(input);
-		let list = pdfa(html, "rss&&item");
-		for (var i = 0; i < list.length; i++) {
-			var title = list[i].match(/\\<title\\>(.*?)\\<\\/title\\>/)[1];
-			var desc = pdfh(list[i], 'description&&Text');
-			var cont = pdfh(list[i], 'pubdate&&Text');
-			var url = list[i].match(/\\<link\\>(.*?)\\n/)[1];
-			d.push({
-				title: title,
-				desc: desc,
-				content: cont,
-				url: url
-			})
-		}
-		setResult(d)
-	`,
 }
