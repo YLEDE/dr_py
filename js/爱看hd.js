@@ -4,7 +4,7 @@ muban.mxpro.二级.tab_text = 'body--small&&Text'
 var rule={
 	title:'爱看',
 	模板:'mxpro',
-	host:'https://aikanys.pro',
+	host:'https://www.aikanys.vip',
 	hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
 	url:'/vodshow/fyfilter/',
 	filterable:1,//是否启用分类筛选,
