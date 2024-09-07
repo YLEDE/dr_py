@@ -84,5 +84,22 @@ var rule = {
             return it
         });
     `,
-    搜索:'.row-right&&.search-box;.thumb-txt&&Text;.lazy&&data-original;.public-list-prb&&Text;a&&href',
+    搜索:$js.toString(() => {
+        let html = request(input);
+        let items = pdfa(html, 'rss&&item');
+        // log(items);
+        let d = [];
+        items.forEach(it => {
+            it = it.replace(/title|link|author|pubdate|description/g, 'p');
+            let url = pdfh(it, 'p:eq(1)&&Text');
+            d.push({
+                title: pdfh(it, 'p&&Text'),
+                url: url,
+                desc: pdfh(it, 'p:eq(3)&&Text'),
+                content: pdfh(it, 'p:eq(2)&&Text'),
+                pic_url: "",
+            });
+        });
+        setResult(d);
+    }),
 }
