@@ -1,7 +1,7 @@
 //改为"搜索模式":"1",{去掉"搜索url"和"搜索后缀"(显示"搜索副标题")不支持快速搜索}。
 {
 "站名":"爱看影视",
-"主页url":"https://ikan6.vip/",
+"主页url":"https://www.ikan6.vip/",
 "数组":"<div class=\"myui-vodlist__box\">&&</div>",
 "图片":"data-original=\"&&\"",
 "标题":"title=\"&&\"",
@@ -29,7 +29,7 @@
 "播放链接":"href=\"&&\"",
 "免嗅":"1",
 "分类":"电影$1#剧集$2#综艺$3#动漫$4",
-"分类url":"https://ikan6.vip/vodshow/{cateId}-{area}-{by}-{class}-{lang}-{letter}---{catePg}---{year}/",
+"分类url":"https://www.ikan6.vip/vodshow/{cateId}-{area}-{by}-{class}-{lang}-{letter}---{catePg}---{year}/",
 "筛选":{
 "1":[
 {
