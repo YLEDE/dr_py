@@ -4,10 +4,8 @@ muban.mxpro.二级.tab_text = 'body--small&&Text'
 var rule={
     title:'爱看',
     模板:'mxpro',
-    // host:'https://akanhd.com',
     host:'https://aikanys.vip',
     hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
-    // url:'/vodshow/fyclass--------fypage---/',
     url:'/vodshow/fyfilter/',
     filterable:1,//是否启用分类筛选,
     filter_url:'{{fl.cateId}}-{{fl.area}}-{{fl.by or "time"}}-{{fl.class}}-{{fl.lang}}-{{fl.letter}}---fypage---{{fl.year}}',
@@ -34,24 +32,54 @@ var rule={
     searchUrl:'/vodsearch/**----------fypage---/',
     class_parse:'.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
     cate_exclude:'伦理剧',
-	lazy:"js:\n  let html = request(input);\n  let hconf = html.match(/r player_.*?=(.*?)</)[1];\n  let json = JSON5.parse(hconf);\n  let url = json.url;\n  if (json.encrypt == '1') {\n    url = unescape(url);\n  } else if (json.encrypt == '2') {\n    url = unescape(base64Decode(url));\n  }\n  if (/\\.(m3u8|mp4|m4a|mp3)/.test(url)) {\n    input = {\n      parse: 0,\n      jx: 0,\n      url: url,\n    };\n  } else {\n    input = url && url.startsWith('http') && tellIsJx(url) ? {parse:0,jx:1,url:url}:input;\n  }",
-	搜索:`js:
-		pdfh = jsp.pdfh, pdfa = jsp.pdfa, pd = jsp.pd;
-		let d = [];
-		var html = request(input);
-		let list = pdfa(html, "rss&&item");
-		for (var i = 0; i < list.length; i++) {
-			var title = list[i].match(/\\<title\\>(.*?)\\<\\/title\\>/)[1];
-			var desc = pdfh(list[i], 'description&&Text');
-			var cont = pdfh(list[i], 'pubdate&&Text');
-			var url = list[i].match(/\\<link\\>(.*?)\\n/)[1];
-			d.push({
-				title: title,
-				desc: desc,
-				content: cont,
-				url: url
-			})
-		}
-		setResult(d)
-	`,
+	lazy:`js:
+        var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
+        var url = html.url;
+        var from = html.from;
+        var next = html.link_next;
+        if (html.encrypt == '1') {
+            url = unescape(url)
+        } else if (html.encrypt == '2') {
+            url = unescape(base64Decode(url))
+        } else if (html.encrypt == '3') {
+            url = url.substring(8, url.length);
+            url = base64Decode(url);
+            url = url.substring(8, (url.length) - 8)
+        }
+        if (/\\.m3u8|\\.mp4/.test(url)) {
+            input = {
+                jx: 0,
+                url: url,
+                parse: 0
+            }
+        } else {
+            var paurl = request(HOST + '/static/player/' + from + '.js').match(/ src="(.*?)'/)[1];
+            if (/https/.test(paurl)) {
+                var purl = paurl + url + '&next=' + next + '&title=';
+                input = {
+                    jx: 0,
+                    url: purl,
+                    parse: 1
+                }
+            }
+        }
+    `,
+	搜索: $js.toString(() => {
+        let html = request(input);
+        let items = pdfa(html, 'rss&&item');
+        // log(items);
+        let d = [];
+        items.forEach(it => {
+            it = it.replace(/title|link|author|pubdate|description/g, 'p');
+            let url = pdfh(it, 'p:eq(1)&&Text');
+            d.push({
+                title: pdfh(it, 'p&&Text'),
+                url: url,
+                desc: pdfh(it, 'p:eq(3)&&Text'),
+                content: pdfh(it, 'p:eq(2)&&Text'),
+                pic_url: "",
+            });
+        });
+        setResult(d);
+    }),
 }
