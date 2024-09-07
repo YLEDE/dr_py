@@ -31,7 +31,7 @@ var rule={
         14:{cateId:'14'},
         20:{cateId:'20'}
     },
-    searchUrl: '/vodsearch/**----------fypage---/',
+    searchUrl: '/rss.xml?wd=**',
     class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
     lazy:`js:
         var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
