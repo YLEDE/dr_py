@@ -4,15 +4,12 @@ muban.mxpro.二级.tab_text = 'body--small&&Text'
 var rule = {
     title: '爱看hd',
 	模板:'mxpro',
-    host: 'https://www.aikanhd.vip',
-    url: '/vodshow/fyfilter/',
-    searchUrl: '/rss.xml?wd=**',
-    searchable: 2,
-    quickSearch: 0,
-    filterable: 1,
-	headers: {
-		'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 GLS/100.10.9939.100',
-	},
+    host: 'https://www.aikanys.pro',
+	hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
+    url:'/vodshow/fyfilter/',
+    searchUrl:'/vodsearch/**----------fypage---/',
+    searchable:2,
+    quickSearch:0,
 	filterable:1,//是否启用分类筛选,
 	filter_url:'{{fl.cateId}}&area={{fl.area}}&by={{fl.by or "time"}}&class={{fl.class}}&lang={{fl.lang}}&letter={{fl.letter}}&page=fypage&year={{fl.year}}',
 	filter:{
@@ -35,27 +32,27 @@ var rule = {
 		14:{cateId:'14'},
 		20:{cateId:'20'}
 	},
-	class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
+	class_parse:'.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
 	cate_exclude:'伦理剧',
 	play_parse: true,
 	lazy: "js:\n  let html = request(input);\n  let hconf = html.match(/r player_.*?=(.*?)</)[1];\n  let json = JSON5.parse(hconf);\n  let url = json.url;\n  if (json.encrypt == '1') {\n    url = unescape(url);\n  } else if (json.encrypt == '2') {\n    url = unescape(base64Decode(url));\n  }\n  if (/\\.(m3u8|mp4|m4a|mp3)/.test(url)) {\n    input = {\n      parse: 0,\n      jx: 0,\n      url: url,\n    };\n  } else {\n    input = url && url.startsWith('http') && tellIsJx(url) ? {parse:0,jx:1,url:url}:input;\n  }",
 	搜索:`js:
-	pdfh = jsp.pdfh, pdfa = jsp.pdfa, pd = jsp.pd;
-	let d = [];
-	var html = request(input);
-	let list = pdfa(html, "rss&&item");
-	for (var i = 0; i < list.length; i++) {
-		var title = list[i].match(/\\<title\\>(.*?)\\<\\/title\\>/)[1];
-		var desc = pdfh(list[i], 'description&&Text');
-		var cont = pdfh(list[i], 'pubdate&&Text');
-		var url = list[i].match(/\\<link\\>(.*?)\\n/)[1];
-		d.push({
-			title: title,
-			desc: desc,
-			content: cont,
-			url: url
-		})
-	}
-	setResult(d)
-		`,
+		pdfh = jsp.pdfh, pdfa = jsp.pdfa, pd = jsp.pd;
+		let d = [];
+		var html = request(input);
+		let list = pdfa(html, "rss&&item");
+		for (var i = 0; i < list.length; i++) {
+			var title = list[i].match(/\\<title\\>(.*?)\\<\\/title\\>/)[1];
+			var desc = pdfh(list[i], 'description&&Text');
+			var cont = pdfh(list[i], 'pubdate&&Text');
+			var url = list[i].match(/\\<link\\>(.*?)\\n/)[1];
+			d.push({
+				title: title,
+				desc: desc,
+				content: cont,
+				url: url
+			})
+		}
+		setResult(d)
+	`,
 }
