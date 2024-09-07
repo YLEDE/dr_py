@@ -32,7 +32,7 @@ var rule={
         20:{cateId:'20'}
     },
     searchUrl: '/vodsearch/**----------fypage---/',
-    class_parse: 'ul.top-bar-menu&&li;a&&Text;a&&href;.*/(\\d+)/',
+    class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
     cate_exclude: '爱看动漫公告|伦理剧',
     play_parse: true,
     lazy: "js:\n  let html = request(input);\n  let hconf = html.match(/r player_.*?=(.*?)</)[1];\n  let json = JSON5.parse(hconf);\n  let url = json.url;\n  if (json.encrypt == '1') {\n    url = unescape(url);\n  } else if (json.encrypt == '2') {\n    url = unescape(base64Decode(url));\n  }\n  if (/\\.(m3u8|mp4|m4a|mp3)/.test(url)) {\n    input = {\n      parse: 0,\n      jx: 0,\n      url: url,\n    };\n  } else {\n    input = url && url.startsWith('http') && tellIsJx(url) ? {parse:0,jx:1,url:url}:input;\n  }",
