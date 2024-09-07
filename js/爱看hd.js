@@ -32,23 +32,26 @@ var rule={
         20:{cateId:'20'}
     },
     searchUrl: '/vodsearch/**----------fypage---/',
-    class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
-    lazy:`js:
-        var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
-        var url = html.url;
-        if (html.encrypt == '1') {
-            url = unescape(url)
-        } else if (html.encrypt == '2') {
-            url = unescape(base64Decode(url))
-        }
-        if (/\\.m3u8|\\.mp4/.test(url)) {
-            input = {
-                jx: 0,
+    class_parse: 'ul.top-bar-menu&&li;a&&Text;a&&href;.*/(\\d+)/',
+    cate_exclude: '爱看动漫公告|伦理剧',
+    play_parse: true,
+    lazy: "js:\n  let html = request(input);\n  let hconf = html.match(/r player_.*?=(.*?)</)[1];\n  let json = JSON5.parse(hconf);\n  let url = json.url;\n  if (json.encrypt == '1') {\n    url = unescape(url);\n  } else if (json.encrypt == '2') {\n    url = unescape(base64Decode(url));\n  }\n  if (/\\.(m3u8|mp4|m4a|mp3)/.test(url)) {\n    input = {\n      parse: 0,\n      jx: 0,\n      url: url,\n    };\n  } else {\n    input = url && url.startsWith('http') && tellIsJx(url) ? {parse:0,jx:1,url:url}:input;\n  }",
+    搜索: $js.toString(() => {
+        let html = request(input);
+        let items = pdfa(html, 'rss&&item');
+        // log(items);
+        let d = [];
+        items.forEach(it => {
+            it = it.replace(/title|link|author|pubdate|description/g, 'p');
+            let url = pdfh(it, 'p:eq(1)&&Text');
+            d.push({
+                title: pdfh(it, 'p&&Text'),
                 url: url,
-                parse: 0
-            }
-        } else {
-            input
-        }
-    `,
+                desc: pdfh(it, 'p:eq(3)&&Text'),
+                content: pdfh(it, 'p:eq(2)&&Text'),
+                pic_url: "",
+            });
+        });
+        setResult(d);
+    }),
 }
