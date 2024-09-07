@@ -3,9 +3,7 @@
 
 var rule = {
     title: '爱看',
-    模板:'短视2',
-    // host:'https://akanhd.com',
-    host:'https://aikanys.vip',
+    host:'https://www.aikanys.pro',
     hostJs:'print(HOST);let html=request(HOST,{headers:{"User-Agent":PC_UA}});let src=jsp.pdfh(html,"li:eq(2)&&a&&href");print(src);HOST=src',
     homeUrl:'/map/',
 	// url: '/index.php/api/vod#type=fyclass&page=fypage',
@@ -33,10 +31,10 @@ var rule = {
         20:{cateId:'20'}
     },
     detailUrl:'/voddetail/fyid/',
-    searchUrl: '/vodsearch/**----------fypage---/',
+    searchUrl: '/rss.xml?wd=**',
     class_name:'连续剧&电影&综艺&动漫&日韩剧&美剧&港台剧&纪录片',
     class_url:'2&1&3&4&15&16&14&20',
-    play_parse:true,
+    class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
     lazy:`js:
         var html = JSON.parse(request(input).match(/r player_.*?=(.*?)</)[1]);
         var url = html.url;
