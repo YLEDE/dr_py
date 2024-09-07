@@ -11,7 +11,7 @@ var rule = {
   "3":[{"key":"class","name":"剧情","value":[{"n":"全部","v":""},{"n":"选秀","v":"选秀"},{"n":"情感","v":"情感"},{"n":"访谈","v":"访谈"},{"n":"播报","v":"播报"},{"n":"旅游","v":"旅游"},{"n":"音乐","v":"音乐"},{"n":"美食","v":"美食"},{"n":"纪实","v":"纪实"},{"n":"曲艺","v":"曲艺"},{"n":"生活","v":"生活"},{"n":"游戏互动","v":"游戏互动"},{"n":"财经","v":"财经"},{"n":"求职","v":"求职"}]},{"key":"area","name":"地区","value":[{"n":"全部","v":""},{"n":"内地","v":"内地"},{"n":"港台","v":"港台"},{"n":"日韩","v":"日韩"},{"n":"欧美","v":"欧美"}]},{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2024","v":"2024"},{"n":"2023","v":"2023"},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"}]},{"key":"by","name":"排序","value":[{"n":"时间","v":"time"},{"n":"人气","v":"hits"},{"n":"评分","v":"score"}]}],
 "4":[{"key":"class","name":"剧情","value":[{"n":"全部","v":""},{"n":"情感","v":"情感"},{"n":"科幻","v":"科幻"},{"n":"热血","v":"热血"},{"n":"推理","v":"推理"},{"n":"搞笑","v":"搞笑"},{"n":"冒险","v":"冒险"},{"n":"萝莉","v":"萝莉"},{"n":"校园","v":"校园"},{"n":"动作","v":"动作"},{"n":"机战","v":"机战"},{"n":"运动","v":"运动"},{"n":"战争","v":"战争"},{"n":"少年","v":"少年"},{"n":"少女","v":"少女"},{"n":"社会","v":"社会"},{"n":"原创","v":"原创"},{"n":"亲子","v":"亲子"},{"n":"益智","v":"益智"},{"n":"励志","v":"励志"},{"n":"其他","v":"其他"}]},{"key":"area","name":"地区","value":[{"n":"全部","v":""},{"n":"中国","v":"国产"},{"n":"日本","v":"日本"},{"n":"欧美","v":"欧美"},{"n":"其他","v":"其他"}]},{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2024","v":"2024"},{"n":"2023","v":"2023"},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"2006","v":"2006"},{"n":"2005","v":"2005"},{"n":"2004","v":"2004"},{"n":"2003","v":"2003"},{"n":"2002","v":"2002"},{"n":"2001","v":"2001"},{"n":"2000","v":"2000"}]},{"key":"by","name":"排序","value":[{"n":"时间","v":"time"},{"n":"人气","v":"hits"},{"n":"评分","v":"score"}]}]
   },
-filter_url: "{{fl.cateId}}-{{fl.area}}-{{fl.by}}-{{fl.class}}-{{fl.lang}}-{{fl.letter}}---fypage---{{fl.year}}",
+filter_url:'{{fl.cateId}}-{{fl.area}}-{{fl.by or "time"}}-{{fl.class}}-{{fl.lang}}-{{fl.letter}}---fypage---{{fl.year}}',
   filter_def: {1:{cateId:'1'},2:{cateId:'2'},4:{cateId:'4'},3:{cateId:'3'}},
             headers: {
 'User-Agent': 'Mozilla/5.0 (Windo9ws NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
@@ -20,34 +20,36 @@ filter_url: "{{fl.cateId}}-{{fl.area}}-{{fl.by}}-{{fl.class}}-{{fl.lang}}-{{fl.l
             class_parse: '.navbar-items&&li;a&&title;a&&href;/(\\d+)/',
             cate_exclude: '爱看动漫公告|伦理剧',
             play_parse: true,
-            lazy: `js:input = {parse: 1, url: input, js: ''}`,
+            lazy: "js:\n  let html = request(input);\n  let hconf = html.match(/r player_.*?=(.*?)</)[1];\n  let json = JSON5.parse(hconf);\n  let url = json.url;\n  if (json.encrypt == '1') {\n    url = unescape(url);\n  } else if (json.encrypt == '2') {\n    url = unescape(base64Decode(url));\n  }\n  if (/\\.(m3u8|mp4|m4a|mp3)/.test(url)) {\n    input = {\n      parse: 0,\n      jx: 0,\n      url: url,\n    };\n  } else {\n    input = url && url.startsWith('http') && tellIsJx(url) ? {parse:0,jx:1,url:url}:input;\n  }",
             double: true,
-            推荐: '*',
-            一级: 'body&&.video-content-item;.text-overflow&&Text;.lazyload&&data-original;.video-title&&Text;a&&href;.text-muted&&Text',
-            二级: {
-                title: 'h1&&Text;.ewave-collapse-item&&li&&Text',
-                img: '.lazyload&&data-original',
-                desc: '.ewave-collapse-item&&li:eq(1)&&Text;.row:eq(2)&&li:eq(1)&&Text;.row:eq(2)&&li&&Text;.detail-info-text&&p&&Text;.ewave-collapse-item&&p&&Text',
-                content: '.mb-0:eq(-1)&&Text',
-                tabs: '.ewave-playlist-tab a',
-                lists: '.ewave-playlist-content:eq(#id)&&li',
-            },
-              搜索: $js.toString(() => {
-        let html = request(input);
-        let items = pdfa(html, 'rss&&item');
-        // log(items);
-        let d = [];
-        items.forEach(it => {
-            it = it.replace(/title|link|author|pubdate|description/g, 'p');
-            let url = pdfh(it, 'p:eq(1)&&Text');
-            d.push({
-                title: pdfh(it, 'p&&Text'),
-                url: url,
-                desc: pdfh(it, 'p:eq(3)&&Text'),
-                content: pdfh(it, 'p:eq(2)&&Text'),
-                pic_url: "",
-            });
-        });
-        setResult(d);
-    }),
-        }
+            推荐: 'body&&.col-xs-4.col-md-3;div.video-content-item;.text-overflow&&title;a&&data-original;.ml-xs-0.mr-xs-0&&Text;a&&href',
+
+  一级: 'div.video-content-item;.text-overflow&&title;a&&data-original;.ml-xs-0.mr-xs-0&&Text;a&&href',
+  二级: {
+    title: '.mb-0 h1&&Text;.row:eq(0) li:eq(0) p&&Text',
+    img: '.block-image.feaimg .lazyload&&data-original',
+    desc: 'ul.row li:eq(1) p&&Text;.ewave-collapse-item .row:eq(1) li:eq(1) p&&Text;ul.row:eq(1) li:eq(0) p&&Text;.row p:eq(0)&&Text;.ewave-collapse-item p&&Text',
+    content: '.ewave-collapse-item p:eq(7)&&Text',
+    tabs: '.ewave-playlist-tab .swiper-wrapper li',
+    lists: '.ewave-playlist-sort-content.playlist:eq(#id) li',
+  },
+  		搜索:`js:
+		pdfh = jsp.pdfh, pdfa = jsp.pdfa, pd = jsp.pd;
+		let d = [];
+		var html = request(input);
+		let list = pdfa(html, "rss&&item");
+		for (var i = 0; i < list.length; i++) {
+			var title = list[i].match(/\\<title\\>(.*?)\\<\\/title\\>/)[1];
+			var desc = pdfh(list[i], 'description&&Text');
+			var cont = pdfh(list[i], 'pubdate&&Text');
+			var url = list[i].match(/\\<link\\>(.*?)\\n/)[1];
+			d.push({
+				title: title,
+				desc: desc,
+				content: cont,
+				url: url
+			})
+		}
+		setResult(d)
+	`,
+}
