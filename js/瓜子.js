@@ -1,5 +1,3 @@
-
-
 var rule = {
     title: '瓜子',
     host: 'https://api.8utdtcq.com',
