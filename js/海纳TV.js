@@ -1,6 +1,6 @@
 var rule = {
 	title: '海纳TV',
-	host: 'https://www.hainatv.net/',
+	host: 'https://hainatv.net/',
 	searchUrl: '/index.php/vod/search.html?wd=**&submit=',
 	url: '/index.php/vod/show/id/fyclass/page/fypage.html',
 	headers: {
