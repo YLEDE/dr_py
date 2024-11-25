@@ -347,7 +347,7 @@ var rule = {
             vod_area: data2.vod_area,
             vod_director: data2.vod_director,
             img: data2.vod_pic,
-            vod_play_from: '雷蒙影视',
+            vod_play_from: '瓜子专线',
             vod_play_url: nnnmm.join('#')
         }
     }),
