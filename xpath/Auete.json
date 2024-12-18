@@ -1,24 +1,6 @@
 {
   "站名":"Auete",
-  "主页url":"https://auete.pro",
-  "起始页":"2",
-  "分类":"电影&电视剧&综艺&动漫&其他",
-  "分类值":"Movie&Tv&Zy&Dm&qita",
-  "分类url":"https://auete.pro/{cateId}{class}/index{catePg}.html",
-  "数组":"<li class=\"trans_3&&/button>",
-  "副标题":"hdtag\">&&<",
-  "搜索模式":"1",
-  "搜索url":"https://auete.pro/search.php?searchword={wd}",
-  "搜索数组":"mb-0\">&&</a>",
-  "搜索图片":"https://cainisi.cf/暂无封面.jpg",
-  "搜索标题":"text-danger\">&&<",
-  "搜索链接":"data-href=\"&&\"",  
-  "影片地区":"地区:&&</p>",
-  "影片类型":"分类:&&</p>",
-  "导演":"导演:&&</p>",
-  "主演":"主演:&&</p>",
-  "简介":"</a><p>&&</p>",  
-  "线路数组":"<i class=\"icon-film\">&&small>",
-  "线路标题":">&&<",  
-  "播放数组":"</h2><ul>&&</ul>"
+  "分类url":"https://auete.pro/{cateId}/index{catePg}.html[https://auete.pro/{cateId}/index.html];;k",
+  "搜索url":"https://auete.pro/search.php?searchword=?wd={wd}",
+  "分类":"电影$Movie#连续剧$Tv#综艺$Zy#动漫$Dm"
 }
