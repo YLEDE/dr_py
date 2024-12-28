@@ -4,7 +4,7 @@ Object.assign(muban.首图2.二级, {
 var rule = {
     模板: '首图2',
     title: '8号影院',
-    host: 'http://www.mapway.net',
+    host: 'http://www.bahaoys.com',
     url: "/frim/fyfilter.html",
     filterable: 1,//是否启用分类筛选,
     filter_url: "{{fl.按分类}}-fypage",
