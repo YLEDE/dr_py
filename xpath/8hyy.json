@@ -3,6 +3,7 @@
     "主页url":"http://www.bahaoys.com",
     "简介":"<span class=\"detail-content\" style=\"display: none;\">&&</span>",
     "搜索url":"http://www.bahaoys.com/search.php?searchword={wd}   ",
+    "搜索模式":"0",
     "搜索链接":"href=\"&&\"",
     "线路数组":"<img src=\"/statics/icon/icon_26.png\"&&</h3>",
     "线路标题":"蓝光专线",
