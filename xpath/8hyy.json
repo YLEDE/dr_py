@@ -1,11 +1,11 @@
 {
     "站名":"8号影院",
-    "主页url":"http://www.mapway.net",
+    "主页url":"http://www.bahaoys.com",
     "简介":"<span class=\"detail-content\" style=\"display: none;\">&&</span>",
-    "搜索url":"http://www.mapway.net/search.php?page={pg}&searchword={wd}",
+    "搜索url":"http://www.bahaoys.com/search.php?searchword={wd}   ",
     "搜索链接":"href=\"&&\"",
     "线路数组":"<img src=\"/statics/icon/icon_26.png\"&&</h3>",
     "线路标题":"蓝光专线",
-    "分类url":"http://www.mapway.net/frim/{cateId}-{catePg}.html",
+    "分类url":"http://www.bahaoys.com/frim/{cateId}-{catePg}.html",
     "分类":"动作片$5#爱情片$6#科幻片$7#恐怖片$8#喜剧片$10#剧情片$12#国产剧$13#港台剧$14#欧美剧$15#日韩剧$16#综艺$3#动漫$4"
 }
