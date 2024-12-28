@@ -4,8 +4,13 @@
     "搜索url":"http://www.mapway.net/search.php?searchword={wd}",
     "搜索链接":"href=\"&&\"",
     "简介":"<pclass=\"col-pddetail\"&&</span>",
+    "播放数组":"<ul class=\"stui-content__playlist playlink clearfix column8\">&&</ul>",
+    "播放标题":">&&</a>",
+    "播放列表":"<li>&&</li>",
+    "播放链接":"http://www.bahaoys.com+href='&&'",
     "线路数组":"<imgsrc=\"/statics/icon/icon_26.png\"&&</h3>",
     "线路标题":"蓝光专线",
     "分类url":"http://www.mapway.net/frim/{cateId}-{catePg}.html",
-    "分类":"动作片$5#爱情片$6#科幻片$7#恐怖片$8#喜剧片$10#剧情片$12#国产剧$13#港台剧$14#欧美剧$15#日韩剧$16#综艺$3#动漫$4"
+    "分类":"电影$1#电视剧$2#综艺$3#动漫$4",
+    "类型":"动作片$5#爱情片$6#科幻片$7#恐怖片$8#喜剧片$10#剧情片$12#国产剧$13#港台剧$14#欧美剧$15#日韩剧$16#综艺$3#动漫$4"
 }
