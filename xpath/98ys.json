@@ -18,7 +18,7 @@
     "播放列表":"<a&&</a>",
     "播放标题":">&&<",
     "播放链接":"href=\"&&\"",
-    "播放请求头": "User-Agent$MOBILE_UA#Referer$http://www.98wap.com/",
+    "播放请求头":"User-Agent$MOBILE_UA#Referer$http://www.98wap.com/",
     "分类url":"http://www.98wap.com/{cateId}/index{catePg}.html[firstPage=http://www.98wap.com/{cateId}/index.html]",
     "分类":"电影$dianyingpian#电视剧$dianshiju#综艺$zongyi#动漫$dongman"
 }
