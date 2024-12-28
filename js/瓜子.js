@@ -1,8 +1,8 @@
 var rule = {
     title: '瓜子',
-    //host: 'https://api.8utdtcq.com',
+    host: 'https://api.8utdtcq.com',
     url: '/App/IndexList/indexList',
-    homeUrl: 'http://124.222.116.5/homedata/home.json',
+    //homeUrl: 'http://124.222.116.5/homedata/home.json',
     searchUrl: '/App/Index/findMoreVod#**',
     searchable: 2,
     quickSearch: 1,
